@@ -12,6 +12,8 @@ public class AvatarFactory {
 			return new Jellyfish(terrainMap,gridPoint);
 		case "puffin":
 			return new Puffin(terrainMap,gridPoint);
+		case "human":
+			return new Human(terrainMap,gridPoint);
 		default:
 			throw new BadAvatarException("Invalid Avatar.");
 		}

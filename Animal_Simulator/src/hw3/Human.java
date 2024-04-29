@@ -1,34 +1,38 @@
 package hw3;
-import edu.du.dudraw.Draw;
+
 import java.util.List;
 
-public class Human extends Avatar{
+public class Human extends Avatar {
+	
+	private TerrainMap tm;
 	private List<GridPoint> pathToFollow;
-	protected Human(GridPoint location) {
-		super(location);
-		this.pathToFollow=null;
+	private String image;
+	private PathFinder pathFinder;
+
+	protected Human(TerrainMap tm, GridPoint location) {
+		super(tm, location);
+		this.tm = tm;
+		this.pathToFollow = null;
+		this.image = "Human.png";
+		this.pathFinder = new PathFinder(tm);
 	}
-	public void setPathToFollow(List<GridPoint> path) {
-		pathToFollow = path;
+
+	public void setPathToFollow(GridPoint destination) {
+		this.pathToFollow = pathFinder.findPath(this.location, destination);
 	}
-	public void followPath(List<GridPoint> path) 
-	{
-		if (pathToFollow!=null &&!pathToFollow.isEmpty()) {
+
+	@Override
+	public void move() {
+		if (pathToFollow != null && !pathToFollow.isEmpty()) {
 			GridPoint nextStep = pathToFollow.get(0);
 			pathToFollow.remove(0);
-			move(nextStep);
+			location = nextStep;
 		}
 	}
-	public void move(GridPoint newLocation)
-	{
-		this.location= newLocation;
-	}
-	public void draw (Draw duDwin) {
-//		duDwin.picture
 
-	}
-	public GridPoint getLocation() {
-		return location;
+	@Override
+	protected String image() {
+		return this.image;
 	}
 }
 
